@@ -1,0 +1,100 @@
+@startuml ############### XXXUML示例
+scale 1280*960
+caption XXX功能流程 1-1
+start
+:step1;
+note right: 有箭头
+:step2;
+floating note right: 无箭头
+-[#blue]->
+:<color:red>step3;
+note right
+  这个注释是
+  //多行的//, 同样可以
+  包含 <b>HTML</b> 文本.
+  ====
+  * 调用函数 ""foo()"" 是**被禁止**的。
+end note
+
+fork
+    -> 线程1;
+    'space label only for alignment
+    'label sp_lab0
+    label sp_lab1
+
+    'real label
+    'label lab
+    :init]
+    while (i<10) is (yes)
+        partition 数据分发 #Gray{
+            note left
+                数据分发
+            end note
+            :step4]
+            :step5]
+        }
+
+        switch (测试?)
+            case ( 条件 A )
+                :Text 1;
+            case ( 条件 B ) 
+                :Text 2;
+            case ( 条件 C )
+                -> 终止;
+                :Text 3;
+                stop
+            case ( 条件 E )
+                :save();
+                label sp_lab2
+                goto sp_lab1
+        endswitch
+        :save]
+
+    endwhile (no)
+
+    :close;
+
+fork again
+    -> 线程2;
+    repeat
+        :init]
+    if (isEnable?) then (yes)
+        :__todo yes__]
+    else (no)
+        :todo no]
+    endif
+    partition 数据处理 #Gray{
+        :step2]
+        #AA0000:step3]
+    }
+    floating note left: 包备注
+
+    backward:这是一个后撤行为;
+    repeat while (<b>end?) is(yes) not(no)
+
+endfork
+:step_End;
+end
+@enduml
+
+@startuml
+title Point two queries to same activity\nwith `goto`
+start
+if (Test Question?) then (yes)
+    'space label only for alignment
+    label sp_lab0
+    label sp_lab1
+    
+    'real label
+    label lab
+    :shared;
+else (no)
+    if (Second Test Question?) then (yes)
+        label sp_lab2
+        goto sp_lab1
+    else
+        :nonShared;
+    endif
+endif
+:merge;
+@enduml
